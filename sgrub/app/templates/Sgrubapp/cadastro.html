@@ -1,0 +1,770 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SGRUB-Cadastro</title>
+ <link rel="stylesheet" href="{% static 'css/style.css'%}?v=1.5">
+ <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">  
+ <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <div class="app-cadastro">
+
+ <div class="app-header d-grid align-items-center py-3" style="grid-template-columns: 1fr auto 1fr;">
+    <div></div>
+    <div class="text-center">
+      <h1 class="m-0">SGRUB</h1>
+      <div class="subtitulo">Sistema de Gestão de Resíduos</div>
+    </div>
+    <div class="pe-3 text-end">
+      <a href="/app/" class="btn btn-outline-light d-inline-flex align-items-center gap-2" id="botaovoltarbtn">
+        <i class="bi bi-arrow-left"></i> voltar
+      </a>
+    </div>
+  </div>
+
+    <!-- ===================== TELA 1: CADASTRO ===================== -->
+    <div id="screen-cadastro" class="screen active">
+
+      <div class="section-cadastro">
+        <div class="cadastro-card">
+          <h2 class="cadastro-titulo">Cadastro</h2>
+          <p class="cadastro-subtitulo">Preencha os seus dados para podermos organizar as suas analises da melhor forma possivel</p>
+
+          <form id="form-cadastro" class="cadastro-form" onsubmit="return false;">
+
+            <div class="cadastro-campo">
+              <label class="campo-label" for="cadastro-nome">Nome Completo:</label>
+              <input class="campo-empresa" type="text" id="cadastro-nome" placeholder="Digite o seu nome completo" required />
+            </div>
+
+            <div class="cadastro-campo">
+              <label class="campo-label" for="cadastro-email">E-mail</label>
+              <input class="campo-empresa" type="email" id="cadastro-email" placeholder="Digite o seu E-mail" required />
+            </div>
+
+            <div class="cadastro-campo">
+              <label class="campo-label" for="cadastro-usuario">Nome de usuario</label>
+              <input class="campo-empresa" type="text" id="cadastro-usuario" placeholder="Digite o nome do seu usuario" required />
+            </div>
+
+            <div class="cadastro-campo">
+              <label class="campo-label" for="cadastro-nascimento">Data de Nascimento</label>
+              <input class="campo-empresa" type="date" id="cadastro-nascimento" required />
+            </div>
+
+            <div class="cadastro-campo">
+              <label class="campo-label" for="cadastro-telefone">Numero de telefone:</label>
+              <input class="campo-empresa" type="tel" id="cadastro-telefone" placeholder="Digite o seu telefone" required />
+            </div>
+
+            <div class="cadastro-campo">
+              <label class="campo-label" for="cadastro-senha">Senha</label>
+              <input class="campo-empresa" type="password" id="cadastro-senha" placeholder="Digite a sua senha" required />
+              <button type="button" class="btn btn-link text-secondary btn-toggle-senha position-absolute end-0 top-50 translate-middle-y text-decoration-none" data-target="#cadastro-senha">
+                <i class="bi bi-eye"></i>
+              </button>
+            </div>
+
+            <div class="cadastro-campo">
+              <label class="campo-label" for="cadastro-senha-confirmar">Confirmar a Senha</label>
+              <input class="campo-empresa" type="password" id="cadastro-senha-confirmar" placeholder="Confirmar a sua senha" required />
+              <button type="button" class="btn btn-link text-secondary btn-toggle-senha position-absolute end-0 top-50 translate-middle-y text-decoration-none" data-target="#cadastro-senha-confirmar">
+                <i class="bi bi-eye"></i>
+              </button>
+            </div>
+
+            <div class="tabs">
+              <button class="tab active" type="button" data-pessoa="PF">Pessoa Fisica</button>
+              <button class="tab" type="button" data-pessoa="PJ">Pessoa Juridica</button>
+            </div>
+
+            <button class="btn-prox-cadastro" type="button" id="btn-prox">Proximo</button>
+            <button class="btn-voltar-cadastro" type="button" id="btn-voltar">Voltar</button>
+          </form>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ===================== TELA 2: CADASTRO DE PESSOA FISICA ===================== -->
+    <div id="screen-pf" class="screen">
+
+      <div class="section-cadastro">
+        <div class="cadastro-card">
+          <h2 class="cadastro-titulo">Pessoa Fisica</h2>
+          <p class="cadastro-subtitulo">Informe os dados da pessoa fisica</p>
+
+          <form id="form-pf" class="cadastro-form" onsubmit="return false;">
+            <div class="cadastro-campo">
+              <label class="campo-label" for="cadastro-cpf">CPF</label>
+              <input class="campo-empresa" type="text" id="cadastro-cpf" placeholder="000.000.000-00" required />
+            </div>
+
+            <div class="cadastro-campo">
+              <label class="campo-label" for="cadastro-profissao">Profissão</label>
+              <input class="campo-empresa" type="text" id="cadastro-profissao" placeholder="Digite o nome da profissão" required />
+            </div>
+
+            <div class="cadastro-campo">
+              <label class="campo-label" for="cadastro-genero">Genero</label>
+              <select class="campo-empresa" id="cadastro-genero" placeholder="Escolha o seu Genero" required>
+                <option value="M">Masculino</option>
+                <option value="F">Feminino</option>
+                <option value="O">Outro</option>
+              </select>
+            </div>
+
+
+            <button class="btn-prox-cadastro" type="button" id="btn-prox-pf">Proximo</button>
+            <button class="btn-voltar-cadastro" type="button" id="btn-voltar-pf">Voltar</button>
+          </form>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ===================== TELA 3: CADASTRO DE PESSOA JURIDICA ===================== -->
+    <div id="screen-pj" class="screen">
+
+      <div class="section-cadastro">
+        <div class="cadastro-card">
+          <h2 class="cadastro-titulo">Pessoa Juridica</h2>
+          <p class="cadastro-subtitulo">Informe os dados da pessoa juridica</p>
+
+          <form id="form-pj" class="cadastro-form" onsubmit="return false;">
+            <div class="cadastro-campo">
+              <label class="campo-label" for="cadastro-cnpj">CNPJ</label>
+              <input class="campo-empresa" type="text" id="cadastro-cnpj" placeholder="00.000.000/0000-00" required />
+            </div>
+
+            <div class="cadastro-campo">
+              <label class="campo-label" for="cadastro-razao">Razao Social</label>
+              <input class="campo-empresa" type="text" id="cadastro-razao" placeholder="Digite a razao social" required />
+            </div>
+
+            <div class="cadastro-campo">
+              <label class="campo-label" for="cadastro-link">Link da Empresa</label>
+              <input class="campo-empresa" type="text" id="cadastro-link" placeholder="Link do portal da empresa(linkedin,site,rede social)" required />
+            </div>
+
+            <div class="cadastro-campo">
+              <label class="campo-label" for="cadastro-nomefantasia">Nome Fantasia</label>
+              <input class="campo-empresa" type="text" id="cadastro-nomefantasia" placeholder="Digite o nome Fantasia da empresa" required />
+            </div>
+
+            <div class="cadastro-campo">
+              <label class="campo-label" for="cadastro-segmento">Segmento da empresa</label>
+              <input class="campo-empresa" type="text" id="cadastro-segmento" placeholder="exemplo:tecnologia,saude, etc" required />
+            </div>
+
+            <div class="cadastro-campo">
+              <label class="campo-label" for="cadastro-dtcfuncacao">Data da fundação</label>
+              <input class="campo-empresa" type="date" id="cadastro-dtcfuncacao" required />
+            </div>
+
+            <div class="cadastro-campo">
+              <label class="campo-label" for="cadastro-porte">Porte da empresa</label>
+              <select class="campo-empresa" id="cadastro-porte" placeholder="Escolha o porte da sua empresa" required>
+                <option value="AUT">Autonomo</option>
+                <option value="MEI">Microempreendedor Individual</option>
+                <option value="EPP">Pequeno porte</option>
+                <option value="EMP">Media porte</option>
+                <option value="EGP">grande porte</option>
+                <option value="SA">Sociedade Anonima</option>
+              </select>
+            </div>
+
+            <button class="btn-prox-cadastro" type="button" id="btn-prox-pj">Proximo</button>
+            <button class="btn-voltar-cadastro" type="button" id="btn-voltar-pj">Voltar</button>
+          </form>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ===================== TELA 4: CADASTRO DE ENDEREÇO ===================== -->
+    <div id="screen-endereco" class="screen">
+
+      <div class="section-cadastro">
+        <div class="cadastro-card">
+          <h2 class="cadastro-titulo">Endereco</h2>
+          <p class="cadastro-subtitulo">Informe o seu endereco</p>
+
+          <form id="form-endereco" class="cadastro-form" onsubmit="return false;">
+            <div class="cadastro-campo">
+              <label class="campo-label" for="cadastro-cep">CEP</label>
+              <input class="campo-empresa" type="text" id="cadastro-cep" placeholder="00000-000" required />
+            </div>
+
+            <div class="cadastro-campo">
+              <label class="campo-label" for="cadastro-logradouro">Logradouro</label>
+              <input class="campo-empresa" type="text" id="cadastro-logradouro" placeholder="Digite o logradouro" required />
+            </div>
+
+            <div class="cadastro-campo">
+              <label class="campo-label" for="cadastro-numero">Numero</label>
+              <input class="campo-empresa" type="text" id="cadastro-numero" placeholder="Digite o numero" required />
+            </div>
+
+            <div class="cadastro-campo">
+              <label class="campo-label" for="cadastro-bairro">Bairro</label>
+              <input class="campo-empresa" type="text" id="cadastro-bairro" placeholder="Digite o bairro" required />
+            </div>
+
+            <div class="cadastro-campo">
+              <label class="campo-label" for="cadastro-cidade">Cidade</label>
+              <input class="campo-empresa" type="text" id="cadastro-cidade" placeholder="Digite a cidade" required />
+            </div>
+
+            <div class="cadastro-campo">
+              <label class="campo-label" for="cadastro-estado">Estado</label>
+              <input class="campo-empresa" type="text" id="cadastro-estado" placeholder="Digite o estado (UF)" required />
+            </div>
+
+            <button class="btn-prox-cadastro" type="button" id="btn-prox-endereco">Proximo</button>
+            <button class="btn-voltar-cadastro" type="button" id="btn-voltar-endereco">Voltar</button>
+          </form>
+        </div>
+      </div>
+
+    </div>
+
+  <!-- ===================== TELA 5: CONFIRMAÇÃO DE DADOS ===================== -->
+  <div id="screen-confirmacao" class="screen">
+
+    <div class="section-cadastro">
+      <div class="cadastro-card">
+        <h2 class="cadastro-titulo">Confirmação de Dados</h2>
+        <p class="cadastro-subtitulo">Revise os seus dados antes de confirmar o cadastro</p>
+
+        <form id="form-confirmacao" class="cadastro-form" onsubmit="return false;">
+          <!-- DADOS GERAIS -->
+          <div class="cadastro-campo">
+            <label class="campo-label">Nome Completo:</label>
+            <div id="resumo-nome" class="campo-empresa">-</div>
+          </div>
+
+          <div class="cadastro-campo">
+            <label class="campo-label">E-mail:</label>
+            <div id="resumo-email" class="campo-empresa">-</div>
+          </div>
+
+          <div class="cadastro-campo">
+            <label class="campo-label">Nome de usuário:</label>
+            <div id="resumo-usuario" class="campo-empresa">-</div>
+          </div>
+
+          <div class="cadastro-campo">
+            <label class="campo-label">Data de Nascimento:</label>
+            <div id="resumo-nascimento" class="campo-empresa">-</div>
+          </div>
+
+          <div class="cadastro-campo">
+            <label class="campo-label">Telefone:</label>
+            <div id="resumo-telefone" class="campo-empresa">-</div>
+          </div>
+
+          <!-- SEÇÃO DINÂMICA: PESSOA FÍSICA -->
+          <div id="resumo-bloco-pf">
+            <div class="cadastro-campo">
+              <label class="campo-label">CPF:</label>
+              <div id="resumo-cpf" class="campo-empresa">-</div>
+            </div>
+            <div class="cadastro-campo">
+              <label class="campo-label">Profissão:</label>
+              <div id="resumo-profissao" class="campo-empresa">-</div>
+            </div>
+            <div class="cadastro-campo">
+              <label class="campo-label">Gênero:</label>
+              <div id="resumo-genero" class="campo-empresa">-</div>
+            </div>
+          </div>
+
+          <!-- SEÇÃO DINÂMICA: PESSOA JURÍDICA -->
+          <div id="resumo-bloco-pj" style="display: none;">
+            <div class="cadastro-campo">
+              <label class="campo-label">CNPJ:</label>
+              <div id="resumo-cnpj" class="campo-empresa">-</div>
+            </div>
+            <div class="cadastro-campo">
+              <label class="campo-label">Razão Social:</label>
+              <div id="resumo-razao" class="campo-empresa">-</div>
+            </div>
+            <div class="cadastro-campo">
+              <label class="campo-label">Nome Fantasia:</label>
+              <div id="resumo-nomefantasia" class="campo-empresa">-</div>
+            </div>
+            <div class="cadastro-campo">
+              <label class="campo-label">Link da Empresa:</label>
+              <div id="resumo-link" class="campo-empresa">-</div>
+            </div>
+            <div class="cadastro-campo">
+              <label class="campo-label">Segmento da Empresa:</label>
+              <div id="resumo-segmento" class="campo-empresa">-</div>
+            </div>
+            <div class="cadastro-campo">
+              <label class="campo-label">Data da Fundação:</label>
+              <div id="resumo-dtcfuncacao" class="campo-empresa">-</div>
+            </div>
+            <div class="cadastro-campo">
+              <label class="campo-label">Porte da Empresa:</label>
+              <div id="resumo-porte" class="campo-empresa">-</div>
+            </div>
+          </div>
+
+          <!-- ENDEREÇO -->
+          <div class="cadastro-campo">
+            <label class="campo-label">CEP:</label>
+            <div id="resumo-cep" class="campo-empresa">-</div>
+          </div>
+          <div class="cadastro-campo">
+            <label class="campo-label">Logradouro:</label>
+            <div id="resumo-logradouro" class="campo-empresa">-</div>
+          </div>
+          <div class="cadastro-campo">
+            <label class="campo-label">Número:</label>
+            <div id="resumo-numero" class="campo-empresa">-</div>
+          </div>
+          <div class="cadastro-campo">
+            <label class="campo-label">Bairro:</label>
+            <div id="resumo-bairro" class="campo-empresa">-</div>
+          </div>
+          <div class="cadastro-campo">
+            <label class="campo-label">Cidade:</label>
+            <div id="resumo-cidade" class="campo-empresa">-</div>
+          </div>
+          <div class="cadastro-campo">
+            <label class="campo-label">Estado:</label>
+            <div id="resumo-estado" class="campo-empresa">-</div>
+          </div>
+
+          <button class="btn-prox-cadastro" type="button" id="btn-confirmar">Confirmar Cadastro</button>
+          <button class="btn-voltar-cadastro" type="button" id="btn-voltar-confirmacao">Voltar</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+  </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<script>
+  $(document.body).ready(function () {
+
+    // ==========================================
+    // MÁSCARAS E FORMATAÇÃO EM TEMPO REAL
+    // ==========================================
+
+    function aplicarMascaraCPF(valor) {
+      return valor
+        .replace(/\D/g, '')
+        .replace(/(\d{3})(\d)/, '$1.$2')
+        .replace(/(\d{3})(\d)/, '$1.$2')
+        .replace(/(\d{3})(\d{1,2})$/, '$1-$2')
+        .substring(0, 14);
+    }
+
+    function aplicarMascaraCNPJ(valor) {
+      return valor
+        .replace(/\D/g, '')
+        .replace(/^(\d{2})(\d)/, '$1.$2')
+        .replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3')
+        .replace(/\.(\d{3})(\d)/, '.$1/$2')
+        .replace(/(\d{4})(\d)/, '$1-$2')
+        .substring(0, 18);
+    }
+
+    function aplicarMascaraTelefone(valor) {
+      var numeros = valor.replace(/\D/g, '').substring(0, 11);
+      if (numeros.length <= 10) {
+        return numeros
+          .replace(/^(\d{2})(\d)/, '($1) $2')
+          .replace(/(\d{4})(\d)/, '$1-$2');
+      } else {
+        return numeros
+          .replace(/^(\d{2})(\d)/, '($1) $2')
+          .replace(/(\d{5})(\d)/, '$1-$2');
+      }
+    }
+
+    function aplicarMascaraCEP(valor) {
+      return valor
+        .replace(/\D/g, '')
+        .replace(/^(\d{5})(\d)/, '$1-$2')
+        .substring(0, 9);
+    }
+
+    function formatarDataBR(dataIso) {
+      if (!dataIso) return '-';
+      var partes = dataIso.split('-');
+      if (partes.length !== 3) return dataIso;
+      return partes[2] + '/' + partes[1] + '/' + partes[0];
+    }
+
+    // Eventos de digitação para formatar as máscaras
+    $('#cadastro-cpf').on('input', function () {
+      $(this).val(aplicarMascaraCPF($(this).val()));
+    });
+
+    $('#cadastro-cnpj').on('input', function () {
+      $(this).val(aplicarMascaraCNPJ($(this).val()));
+    });
+
+    $('#cadastro-telefone').on('input', function () {
+      $(this).val(aplicarMascaraTelefone($(this).val()));
+    });
+
+    $('#cadastro-cep').on('input', function () {
+      $(this).val(aplicarMascaraCEP($(this).val()));
+    });
+
+    // ==========================================
+    // FUNÇÕES DE VALIDAÇÃO
+    // ==========================================
+
+    function validarEmail(email) {
+      var estruturaEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return estruturaEmail.test(email);
+    }
+
+    function validarTelefone(telefone) {
+      var apenasNumeros = telefone.replace(/\D/g, '');
+      return apenasNumeros.length >= 10 && apenasNumeros.length <= 11;
+    }
+
+    function validarCPF(cpf) {
+      cpf = cpf.replace(/\D/g, '');
+      if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) return false;
+
+      var soma = 0;
+      var resto;
+
+      for (var i = 1; i <= 9; i++) soma += parseInt(cpf.substring(i - 1, i)) * (11 - i);
+      resto = (soma * 10) % 11;
+      if (resto === 10 || resto === 11) resto = 0;
+      if (resto !== parseInt(cpf.substring(9, 10))) return false;
+
+      soma = 0;
+      for (var j = 1; j <= 10; j++) soma += parseInt(cpf.substring(j - 1, j)) * (12 - j);
+      resto = (soma * 10) % 11;
+      if (resto === 10 || resto === 11) resto = 0;
+      if (resto !== parseInt(cpf.substring(10, 11))) return false;
+
+      return true;
+    }
+
+    function validarCNPJ(cnpj) {
+      cnpj = cnpj.replace(/\D/g, '');
+      if (cnpj.length !== 14 || /^(\d)\1{13}$/.test(cnpj)) return false;
+
+      var tamanho = cnpj.length - 2;
+      var numeros = cnpj.substring(0, tamanho);
+      var digitos = cnpj.substring(tamanho);
+      var soma = 0;
+      var pos = tamanho - 7;
+
+      for (var i = tamanho; i >= 1; i--) {
+        soma += numeros.charAt(tamanho - i) * pos--;
+        if (pos < 2) pos = 9;
+      }
+
+      var resultado = soma % 11 < 2 ? 0 : 11 - (soma % 11);
+      if (resultado !== parseInt(digitos.charAt(0))) return false;
+
+      tamanho = tamanho + 1;
+      numeros = cnpj.substring(0, tamanho);
+      soma = 0;
+      pos = tamanho - 7;
+
+      for (var j = tamanho; j >= 1; j--) {
+        soma += numeros.charAt(tamanho - j) * pos--;
+        if (pos < 2) pos = 9;
+      }
+
+      resultado = soma % 11 < 2 ? 0 : 11 - (soma % 11);
+      if (resultado !== parseInt(digitos.charAt(1))) return false;
+
+      return true;
+    }
+
+    // Helper para exibir/ocultar erros visuais abaixo do campo
+    function tratarFeedbackVisao(elemento, ehValido, mensagem) {
+      var idErro = 'erro-' + elemento.attr('id');
+      $('#' + idErro).remove();
+
+      if (!ehValido) {
+        elemento.css('border-color', '#dc3545');
+        elemento.after('<small id="' + idErro + '" style="color: #dc3545; font-size: 0.8em; margin-top: 4px; display: block;">' + mensagem + '</small>');
+      } else {
+        elemento.css('border-color', '');
+      }
+    }
+
+    // ==========================================
+    // VALIDAÇÕES EM TEMPO REAL (EVENTOS)
+    // ==========================================
+
+    $('#cadastro-email').on('keyup blur', function () {
+      var valor = $(this).val();
+      if (valor.length > 0) {
+        var valido = validarEmail(valor);
+        tratarFeedbackVisao($(this), valido, 'Digite um e-mail válido (ex: nome@dominio.com).');
+      } else {
+        tratarFeedbackVisao($(this), true);
+      }
+    });
+
+    $('#cadastro-telefone').on('keyup blur', function () {
+      var valor = $(this).val();
+      if (valor.length > 0) {
+        var valido = validarTelefone(valor);
+        tratarFeedbackVisao($(this), valido, 'Insira um telefone válido com DDD.');
+      } else {
+        tratarFeedbackVisao($(this), true);
+      }
+    });
+
+    $('#cadastro-senha, #cadastro-senha-confirmar').on('keyup blur', function () {
+      var senha = $('#cadastro-senha').val();
+      var confirmar = $('#cadastro-senha-confirmar').val();
+
+      if (confirmar.length > 0) {
+        var coincidem = senha === confirmar;
+        tratarFeedbackVisao($('#cadastro-senha-confirmar'), coincidem, 'As senhas não coincidem.');
+      } else {
+        tratarFeedbackVisao($('#cadastro-senha-confirmar'), true);
+      }
+    });
+
+    $('#cadastro-cpf').on('keyup blur', function () {
+      var valor = $(this).val();
+      if (valor.replace(/\D/g, '').length === 11) {
+        var valido = validarCPF(valor);
+        tratarFeedbackVisao($(this), valido, 'CPF inválido.');
+      } else if (valor.length > 0) {
+        tratarFeedbackVisao($(this), false, 'O CPF deve conter 11 dígitos.');
+      } else {
+        tratarFeedbackVisao($(this), true);
+      }
+    });
+
+    $('#cadastro-cnpj').on('keyup blur', function () {
+      var valor = $(this).val();
+      if (valor.replace(/\D/g, '').length === 14) {
+        var valido = validarCNPJ(valor);
+        tratarFeedbackVisao($(this), valido, 'CNPJ inválido.');
+      } else if (valor.length > 0) {
+        tratarFeedbackVisao($(this), false, 'O CNPJ deve conter 14 dígitos.');
+      } else {
+        tratarFeedbackVisao($(this), true);
+      }
+    });
+
+    // ==========================================
+    // NAVEGAÇÃO E LÓGICA DE TELAS
+    // ==========================================
+
+    function mostrarTela(id) {
+      $('.screen').removeClass('active');
+      $('#' + id).addClass('active');
+    }
+
+    $('.tab[data-pessoa]').on('click', function () {
+      $('.tab').removeClass('active');
+      $(this).addClass('active');
+    });
+
+    $('#btn-prox').on('click', function () {
+      var emailValido = validarEmail($('#cadastro-email').val());
+      var telefoneValido = validarTelefone($('#cadastro-telefone').val());
+      var senhasIguais = $('#cadastro-senha').val() === $('#cadastro-senha-confirmar').val() && $('#cadastro-senha').val() !== '';
+
+      tratarFeedbackVisao($('#cadastro-email'), emailValido, 'Digite um e-mail válido.');
+      tratarFeedbackVisao($('#cadastro-telefone'), telefoneValido, 'Insira um telefone válido com DDD.');
+      tratarFeedbackVisao($('#cadastro-senha-confirmar'), senhasIguais, 'As senhas não coincidem ou estão vazias.');
+
+      if (!emailValido || !telefoneValido || !senhasIguais) {
+        return;
+      }
+
+      var ehPessoaFisica = $('.tab[data-pessoa="PF"]').hasClass('active');
+      mostrarTela(ehPessoaFisica ? 'screen-pf' : 'screen-pj');
+    });
+
+    $('#btn-prox-pf').on('click', function () {
+      var cpfValido = validarCPF($('#cadastro-cpf').val());
+      tratarFeedbackVisao($('#cadastro-cpf'), cpfValido, 'CPF inválido.');
+
+      if (!cpfValido) return;
+      mostrarTela('screen-endereco');
+    });
+
+    $('#btn-prox-pj').on('click', function () {
+      var cnpjValido = validarCNPJ($('#cadastro-cnpj').val());
+      tratarFeedbackVisao($('#cadastro-cnpj'), cnpjValido, 'CNPJ inválido.');
+
+      if (!cnpjValido) return;
+      mostrarTela('screen-endereco');
+    });
+
+    $('#btn-prox-endereco').on('click', function () {
+      // Dados Gerais
+      $('#resumo-nome').text($('#cadastro-nome').val() || '-');
+      $('#resumo-email').text($('#cadastro-email').val() || '-');
+      $('#resumo-usuario').text($('#cadastro-usuario').val() || '-');
+      $('#resumo-nascimento').text(formatarDataBR($('#cadastro-nascimento').val()));
+      $('#resumo-telefone').text($('#cadastro-telefone').val() || '-');
+
+      var ehPessoaFisica = $('.tab[data-pessoa="PF"]').hasClass('active');
+
+      if (ehPessoaFisica) {
+        $('#resumo-bloco-pf').show();
+        $('#resumo-bloco-pj').hide();
+
+        $('#resumo-cpf').text($('#cadastro-cpf').val() || '-');
+        $('#resumo-profissao').text($('#cadastro-profissao').val() || '-');
+        $('#resumo-genero').text($('#cadastro-genero option:selected').text() || '-');
+      } else {
+        $('#resumo-bloco-pf').hide();
+        $('#resumo-bloco-pj').show();
+
+        $('#resumo-cnpj').text($('#cadastro-cnpj').val() || '-');
+        $('#resumo-razao').text($('#cadastro-razao').val() || '-');
+        $('#resumo-link').text($('#cadastro-link').val() || '-');
+        $('#resumo-nomefantasia').text($('#cadastro-nomefantasia').val() || '-');
+        $('#resumo-segmento').text($('#cadastro-segmento').val() || '-');
+        $('#resumo-dtcfuncacao').text(formatarDataBR($('#cadastro-dtcfuncacao').val()));
+        $('#resumo-porte').text($('#cadastro-porte option:selected').text() || '-');
+      }
+
+      // Endereço
+      $('#resumo-cep').text($('#cadastro-cep').val() || '-');
+      $('#resumo-logradouro').text($('#cadastro-logradouro').val() || '-');
+      $('#resumo-numero').text($('#cadastro-numero').val() || '-');
+      $('#resumo-bairro').text($('#cadastro-bairro').val() || '-');
+      $('#resumo-cidade').text($('#cadastro-cidade').val() || '-');
+      $('#resumo-estado').text($('#cadastro-estado').val() || '-');
+
+      mostrarTela('screen-confirmacao');
+    });
+
+  $('#btn-confirmar').on('click', function () {
+    var ehPessoaFisica = $('.tab[data-pessoa="PF"]').hasClass('active');
+
+    // Dados comuns
+    var dadosCadastro = {
+      nome: $('#cadastro-nome').val(),
+      email: $('#cadastro-email').val(),
+      usuario: $('#cadastro-usuario').val(),
+      nascimento: $('#cadastro-nascimento').val(),
+      telefone: $('#cadastro-telefone').val(),
+      senha: $('#cadastro-senha').val(),
+      tipo_pessoa: ehPessoaFisica ? 'PF' : 'PJ',
+
+      // Endereço
+      cep: $('#cadastro-cep').val(),
+      logradouro: $('#cadastro-logradouro').val(),
+      numero: $('#cadastro-numero').val(),
+      bairro: $('#cadastro-bairro').val(),
+      cidade: $('#cadastro-cidade').val(),
+      estado: $('#cadastro-estado').val()
+    };
+
+    // Atribuição dinâmica baseada na escolha (PF / PJ)
+    if (ehPessoaFisica) {
+      dadosCadastro.cpf = $('#cadastro-cpf').val();
+      dadosCadastro.profissao = $('#cadastro-profissao').val();
+      dadosCadastro.genero = $('#cadastro-genero').val();
+    } else {
+      dadosCadastro.cnpj = $('#cadastro-cnpj').val();
+      dadosCadastro.razao_social = $('#cadastro-razao').val();
+      dadosCadastro.link_empresa = $('#cadastro-link').val();
+      dadosCadastro.nome_fantasia = $('#cadastro-nomefantasia').val();
+      dadosCadastro.segmento = $('#cadastro-segmento').val();
+      dadosCadastro.data_fundacao = $('#cadastro-dtcfuncacao').val();
+      dadosCadastro.porte = $('#cadastro-porte').val();
+    }
+
+
+    $.ajax({
+      url: '/api/cadastro/',
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify(dadosCadastro),
+      success: function (resposta) {
+        alert('Cadastro realizado com sucesso!');
+        window.location.href = '/app/';
+      },
+      error: function (xhr) {
+        alert('Erro ao realizar o cadastro. Tente novamente.');
+      }
+    });
+  });
+
+    $('#btn-voltar').on('click', function () {
+      window.location.href = '/app/';
+    });
+
+    $('#btn-voltar-pf, #btn-voltar-pj').on('click', function () {
+      mostrarTela('screen-cadastro');
+    });
+
+    $('#btn-voltar-endereco').on('click', function () {
+      var ehPessoaFisica = $('.tab[data-pessoa="PF"]').hasClass('active');
+      mostrarTela(ehPessoaFisica ? 'screen-pf' : 'screen-pj');
+    });
+
+    $('#btn-voltar-confirmacao').on('click', function () {
+      mostrarTela('screen-endereco');
+    });
+
+  });
+
+  $('#cadastro-cep').on('blur keyup', function () {
+    var cepLimpo = $(this).val().replace(/\D/g, '');
+
+    if (cepLimpo.length === 8) {
+      $.ajax({
+        url: 'https://viacep.com.br/ws/' + cepLimpo + '/json/',
+        type: 'GET',
+        dataType: 'json',
+        success: function (dados) {
+          if (!("erro" in dados)) {
+            $('#cadastro-logradouro').val(dados.logradouro);
+            $('#cadastro-bairro').val(dados.bairro);
+            $('#cadastro-cidade').val(dados.localidade);
+            $('#cadastro-estado').val(dados.uf);
+          } else {
+            alert('CEP não encontrado.');
+          }
+        },
+        error: function () {
+          alert('Erro ao consultar o CEP.');
+        }
+      });
+    }
+  });
+    $('.btn-toggle-senha').on('click', function () {
+    var targetId = $(this).data('target');
+    var inputSenha = $(targetId);
+    var icone = $(this).find('i');
+    var tipoAtual = inputSenha.attr('type');
+
+    if (tipoAtual === 'password') {
+      inputSenha.attr('type', 'text');
+      icone.removeClass('bi-eye').addClass('bi-eye-slash');
+    } else {
+      inputSenha.attr('type', 'password');
+      icone.removeClass('bi-eye-slash').addClass('bi-eye');
+    }
+  });
+</script>
+
+</body>
+</html>

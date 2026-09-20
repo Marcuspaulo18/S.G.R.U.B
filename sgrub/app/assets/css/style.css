@@ -1,0 +1,860 @@
+/* ==================================================================
+   SGRUB - Global / Reset
+   Compartilhado por todas as páginas (login, index, analise)
+   ================================================================== */
+
+* { 
+  box-sizing: border-box; 
+}
+
+body {
+  background: #faf9f6;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  color: #182620;
+  display: flex;
+  justify-content: center;
+  width:auto;
+  height:auto;
+}
+
+.app {
+  width: 100%;
+  height: auto;
+  background: #ffffff;
+  overflow: hidden;
+  border: 1px solid #cfe0d5;
+}
+
+/* ==================================================================
+   Header (compartilhado)
+   Usado em: login, index, analise
+   ================================================================== */
+
+.app-header {
+  background: #0c3b28;
+  padding: 30px 40px 22px;
+  text-align: center;
+}
+
+.app-header h1 {
+  font-family: 'Georgia', 'Times New Roman', serif;
+  font-size: 2.1rem;
+  letter-spacing: 0.06em;
+  color: #ffffff;
+  margin: 0;
+}
+
+.app-header .subtitulo {
+  font-size: 0.78rem;
+  color: #a9c9b6;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-top: 6px;
+}
+
+/* ==================================================================
+   Navegação por abas (tabs)
+   Usado em: login, analise (NÃO usado no index)
+   ================================================================== */
+
+.tabs {
+  display: flex;
+  background: #0c3b28;
+  padding: 0 40px;
+}
+
+.tab {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #a9c9b6;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 14px 10px;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.tab.active {
+  color: #ffffff;
+  border-bottom-color: #1c8a56;
+}
+
+.tab:hover:not(.active) { color: #dfeee5; }
+
+/* ==================================================================
+   Telas (screens) - container base
+   Usado em: login, index, analise
+   ================================================================== */
+
+.screen { padding: 32px 40px 40px; display: none; }
+.screen.active { display: block; }
+
+/* ==================================================================
+   Botões (compartilhados)
+   Usado em: login, index, analise
+   ================================================================== */
+
+button.action {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 24px;
+  cursor: pointer;
+  color: #ffffff;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+button.action:active { transform: translateY(1px); }
+
+.btn-verde   { background: #1c8a56; }
+.btn-verde:hover   { background: #167048; }
+.btn-vermelho { background: #b3402f; }
+.btn-vermelho:hover { background: #96331f; }
+.btn-azul    { background: #3f6f93; }
+.btn-azul:hover    { background: #315a78; }
+
+/* ==================================================================
+   TELA: index
+   Usado em: index
+   ================================================================== */
+
+.section-index{
+  margin: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+
+}
+
+.app-index{
+  width: 100%;
+  height: auto;
+  background: #ffffff;
+  overflow: hidden;
+  border: 1px solid #cfe0d5;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+}
+
+.btn-section{
+  background-color:#00b6ff;
+  color:white;
+  border-radius:8px;
+  border:3px solid #00b6ff;
+  height: 43px;
+  width:100%;
+  font-size:20px;
+  font-weight:500;
+  margin:10px;
+}
+
+/* ==================================================================
+   TELA: login
+   Usado em: login
+   ================================================================== */
+
+.section-login{
+  margin: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+
+}
+
+.app-login{
+  width: 100%;
+  height: auto;
+  background: #ffffff;
+  overflow: hidden;
+  border: 1px solid #cfe0d5;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+}
+
+.login-card {
+  background: #ffffff;
+  border: 1px solid #cfe0d5;
+  border-radius: 14px;
+  padding: 36px 32px;
+  max-width: 400px;
+  width: 100%;
+  margin: 20px auto;
+}
+
+.login-titulo {
+  font-family: 'Georgia', 'Times New Roman', serif;
+  font-size: 1.5rem;
+  color: #0c3b28;
+  text-align: center;
+  margin: 0 0 6px;
+}
+
+.login-subtitulo {
+  text-align: center;
+  font-size: 0.88rem;
+  color: #5c6b62;
+  margin-bottom: 28px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.login-campo {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-erro {
+  background: #fdecea;
+  color: #b3402f;
+  border: 1px solid #f5c6cb;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 0.88rem;
+  text-align: center;
+}
+
+.btn-login {
+  background: #1c8a56;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  margin-top: 6px;
+}
+
+.btn-login:hover {
+  background: #167048;
+}
+
+.btn-login:active {
+  transform: translateY(1px);
+}
+
+.login-links {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.login-link {
+  color: #1c8a56;
+  font-size: 0.88rem;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.login-link:hover {
+  text-decoration: underline;
+  color: #167048;
+}
+
+.btn-voltar-login {
+  display: block;
+  width: 100%;
+  margin-top: 14px;
+  background: transparent;
+  color: #5c6b62;
+  border: 1px solid #cfe0d5;
+  border-radius: 10px;
+  padding: 10px 24px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.btn-voltar-login:hover {
+  background: #e4efe8;
+  color: #182620;
+}
+
+/* ==================================================================
+   TELA: index
+   Usado em: index
+   ================================================================== */
+
+.section-index{
+  margin: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+
+}
+
+.app-index{
+  width: 100%;
+  height: auto;
+  background: #ffffff;
+  overflow: hidden;
+  border: 1px solid #cfe0d5;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+}
+
+.btn-section{
+  background-color:#00b6ff;
+  color:white;
+  border-radius:8px;
+  border:3px solid #00b6ff;
+  height: 43px;
+  width:100%;
+  font-size:20px;
+  font-weight:500;
+  margin:10px;
+}
+
+/* ==================================================================
+   TELA: Cadastro
+   Usado em: Cadastro
+   ================================================================== */
+
+.section-cadastro{
+  margin: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+
+}
+
+.app-cadastro{
+  width: 100%;
+  height: auto;
+  background: #ffffff;
+  overflow: hidden;
+  border: 1px solid #cfe0d5;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+}
+
+.cadastro-card {
+  background: #ffffff;
+  border: 1px solid #cfe0d5;
+  border-radius: 14px;
+  padding: 36px 32px;
+  max-width: 400px;
+  width: 100%;
+  margin: 20px auto;
+}
+
+.cadastro-titulo {
+  font-family: 'Georgia', 'Times New Roman', serif;
+  font-size: 1.5rem;
+  color: #0c3b28;
+  text-align: center;
+  margin: 0 0 6px;
+}
+
+.cadastro-subtitulo {
+  text-align: center;
+  font-size: 0.88rem;
+  color: #5c6b62;
+  margin-bottom: 28px;
+}
+
+.cadastro-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.cadastro-campo {
+  display: flex;
+  flex-direction: column;
+}
+
+.cadastro-erro {
+  background: #fdecea;
+  color: #b3402f;
+  border: 1px solid #f5c6cb;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 0.88rem;
+  text-align: center;
+}
+
+.btn-prox-cadastro {
+  background: #1c8a56;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  margin-top: 6px;
+}
+
+.btn-prox-cadastro:hover {
+  background: #167048;
+}
+
+.btn-prox-cadastro:active {
+  transform: translateY(1px);
+}
+
+.cadastro-links {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.cadastro-link {
+  color: #1c8a56;
+  font-size: 0.88rem;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.cadastro-link:hover {
+  text-decoration: underline;
+  color: #167048;
+}
+
+.btn-voltar-cadastro {
+  display: block;
+  width: 100%;
+  margin-top: 14px;
+  background: transparent;
+  color: #5c6b62;
+  border: 1px solid #cfe0d5;
+  border-radius: 10px;
+  padding: 10px 24px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.btn-voltar-cadastro:hover {
+  background: #e4efe8;
+  color: #182620;
+}
+
+
+/* ==================================================================
+   TELA: Análise
+   Usado em: login, index, analise
+   ================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+
+.app-container {
+  max-width: 600px;   
+  margin: 0 auto;    
+  padding: 16px 20px; 
+  width: 100%;
+}
+
+.controls-row {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.preview-wrapper { display: flex; justify-content: center; margin-bottom: 26px; }
+
+.image-preview {
+  width: 210px;
+  height: 210px;
+  border-radius: 14px;
+  background: #e4efe8;
+  border: 2px dashed #cfe0d5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #5c6b62;
+  font-size: 0.88rem;
+  padding: 16px;
+  overflow: hidden;
+}
+.image-preview img { width: 100%; height: 100%; object-fit: cover; border-radius: 12px; }
+
+.predicao {
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: #10633f;
+  margin-bottom: 18px;
+  line-height: 1.4;
+}
+.predicao .categoria { display: block; font-size: 1.25rem; color: #182620; }
+
+.analysis-box {
+  background: #ffffff;
+  border: 1px solid #cfe0d5;
+  border-radius: 10px;
+  padding: 16px 20px;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: #182620;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.bioplastic-banner {
+  background: #0c3b28;
+  color: #6fe0a0;
+  border-radius: 10px;
+  padding: 12px 18px;
+  text-align: center;
+  font-size: 0.92rem;
+  font-weight: 600;
+  margin-bottom: 26px;
+}
+
+/* Estado vazio (sem dados carregados ainda) */
+.placeholder {
+  color: #5c6b62 !important;
+  font-style: italic;
+  font-weight: 400 !important;
+}
+.bioplastic-banner.placeholder {
+  background: #e4efe8;
+  color: #5c6b62 !important;
+}
+
+/* ==================================================================
+   TELA: Relatório
+   Usado em: analise (aba Relatório)
+   ================================================================== */
+
+.relatorio-titulo {
+  text-align: center;
+  font-family: 'Georgia', 'Times New Roman', serif;
+  font-size: 1.3rem;
+  color: #10633f;
+  margin-bottom: 18px;
+}
+
+.relatorio-box {
+  background: #e4efe8;
+  border: 1px solid #cfe0d5;
+  border-radius: 10px;
+  padding: 16px 20px;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: #182620;
+  height: 130px;
+  overflow-y: auto;
+  margin-bottom: 22px;
+  white-space: pre-line;
+}
+
+.campo-label {
+  font-size: 0.82rem;
+  color: #5c6b62;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.campo-empresa {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid #cfe0d5;
+  font-size: 0.92rem;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  margin-bottom: 18px;
+  background: #ffffff;
+  color: #182620;
+}
+.campo-empresa:focus {
+  outline: none;
+  border-color: #1c8a56;
+  box-shadow: 0 0 0 3px rgba(28,138,86,0.15);
+}
+
+.relatorio-acoes {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+
+.relatorio-box.placeholder { color: #5c6b62; }
+
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #ffffff;
+    color: #1f2a24;
+  }
+
+  .app-index {
+    margin: 0 auto;
+  }
+
+  .app-header {
+    background: #0f3d24;
+    text-align: center;
+    padding: 24px 24px 28px;
+  }
+
+  .app-header h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 32px;
+    letter-spacing: 2px;
+    color: #ffffff;
+    margin: 0 0 6px;
+  }
+
+  .subtitulo {
+    font-size: 12px;
+    letter-spacing: 1px;
+    color: #ffffff;
+    margin-bottom: 0;
+  }
+
+  .historico {
+    max-width: 1200px;
+    margin: 32px auto;
+    border: 1px solid #c9dccb;
+    border-radius: 4px;
+  }
+
+  .historico-cabecalho {
+    padding: 20px 24px;
+    border-bottom: 1px solid #c9dccb;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .historico-titulo {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 20px;
+    color: #0f3d24;
+    margin: 0;
+  }
+
+  .historico-filtro {
+    display: flex;
+    gap: 8px;
+  }
+
+  .historico-filtro input {
+    padding: 8px 32px;
+    border: 1px solid #c9dccb;
+    border-radius: 4px;
+    font-size: 13px;
+    color: #5c6b61;
+    outline: none;
+  }
+
+  .historico-filtro input:focus {
+    border-color: #1c5c3a;
+  }
+
+  .historico-lista {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .historico-item {
+    display: grid;
+    grid-template-columns: 1fr 1fr 100px 90px 120px 90px;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 24px;
+    border-bottom: 1px solid #c9dccb;
+    background: #ffffff;
+  }
+
+  .historico-item:last-child {
+    border-bottom: none;
+  }
+
+  .historico-item:hover {
+    background: #e5f0e6;
+  }
+
+  .historico-campo-label {
+    font-size: 11px;
+    color: #5c6b61;
+    margin-bottom: 2px;
+  }
+
+  .historico-campo-valor {
+    font-size: 14px;
+    color: #1f2a24;
+  }
+
+  .historico-selo {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+  }
+
+  .selo-uteis {
+    background: #e5f0e6;
+    color: #1c5c3a;
+  }
+
+  .selo-rejeito {
+    background: #f4e4e1;
+    color: #a8442f;
+  }
+
+  .historico-acoes {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+  }
+
+  .botao-acao {
+    padding: 6px 14px;
+    border: none;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: bold;
+    color: #ffffff;
+    cursor: pointer;
+  }
+
+  .botao-ver {
+    background: #4a7396;
+  }
+
+  .botao-excluir {
+    background: #a8442f;
+  }
+
+  .historico-vazio {
+    padding: 48px 24px;
+    text-align: center;
+    color: #5c6b61;
+    font-size: 14px;
+  }
+
+  .historico-rodape {
+    padding: 14px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    color: #5c6b61;
+  }
+
+#buscadocumentoinput {
+    width: 100%;
+    min-width: 280px;
+    padding: 8px 12px;
+    box-sizing: border-box;
+  }
+  .historico-filtro {
+    flex: 1;
+    max-width: 400px;
+  }
+
+  /* Organização homogênea e sem quebras de linha na listagem */
+  .historico-lista .historico-item {
+    display: grid !important;
+    grid-template-columns: 1.2fr 2fr 1fr auto !important;
+    align-items: center !important;
+    gap: 15px !important;
+  }
+
+  /* Evita quebra de textos longos e controla o comportamento de linha única */
+  .historico-lista .historico-item > div {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Garante que a data e a hora fiquem estritamente na mesma linha */
+  .historico-lista .historico-item div:nth-child(3) {
+    white-space: nowrap !important;
+  }
+
+  /* Alinha os botões de ação uniformemente na extremidade */
+  .historico-acoes {
+    display: flex;
+    gap: 8px;
+    white-space: nowrap !important;
+    justify-content: flex-end;
+  }
+
+  #buscadocumentoinput {
+    width: 100%;
+    min-width: 280px;
+    padding: 8px 12px;
+    box-sizing: border-box;
+  }
+  .historico-filtro {
+    flex: 1;
+    max-width: 400px;
+  }
+/* ==================================================================
+   Gráfico de barras (compartilhado)
+   Usado em: login, analise
+   ================================================================== */
+
+.graph-frame {
+  background: #ffffff;
+  border: 1px solid #cfe0d5;
+  border-radius: 14px;
+  padding: 18px 20px 10px;
+}
+
+.graph-titulo {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #5c6b62;
+  margin-bottom: 14px;
+  text-align: center;
+}
+
+.bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.bar-label { width: 90px; font-size: 0.82rem; color: #182620; text-align: right; flex-shrink: 0; }
+.bar-track { flex: 1; background: #e4efe8; border-radius: 6px; overflow: hidden; height: 18px; }
+.bar-fill { height: 100%; background: #1c8a56; border-radius: 6px 0 0 6px; }
+.bar-valor { width: 52px; font-size: 0.8rem; color: #5c6b62; }
+
+/* ==================================================================
+   Responsivo (compartilhado)
+   ================================================================== */
+
+@media (max-width: 480px) {
+  .app-header, .screen { padding-left: 22px; padding-right: 22px; }
+  .app-header h1 { font-size: 1.7rem; }
+  .controls-row, .relatorio-acoes { flex-direction: column; align-items: stretch; }
+  .bar-label { width: 70px; font-size: 0.74rem; }
+  .login-card { margin: 12px; padding: 28px 20px; }
+}

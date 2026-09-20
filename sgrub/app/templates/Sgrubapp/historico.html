@@ -1,0 +1,253 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>SGRUB - Historico de Relatorios</title>
+<link rel="stylesheet" href="{% static 'css/style.css' %}?v=1.8">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">  
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<!-- Importação do jQuery -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+
+<div class="app-index">
+
+  <div class="app-header d-grid align-items-center py-3" style="grid-template-columns: 1fr auto 1fr;">
+    <div></div>
+    <div class="text-center">
+      <h1 class="m-0">SGRUB</h1>
+      <div class="subtitulo">Sistema de Gestão de Resíduos</div>
+    </div>
+    <div class="pe-3 text-end">
+      <a href="/app/" class="btn btn-outline-light d-inline-flex align-items-center gap-2" id="botaovoltarbtn">
+        <i class="bi bi-arrow-left"></i> voltar
+      </a>
+    </div>
+  </div>
+
+  <!-- Seção da Listagem de Histórico -->
+  <div class="historico" id="secaohistoricodiv">
+    <div class="historico-cabecalho">
+      <h2 class="historico-titulo">historico de relatorios</h2>
+      <div class="historico-filtro">
+        <input type="text" id="buscadocumentoinput" placeholder="buscar pelo nome do documento">
+      </div>
+    </div>
+
+    <div class="historico-lista" id="listahistoricodiv">
+      <!-- Carregado via AJAX -->
+    </div>
+
+    <div class="historico-rodape">
+      <span id="totalregistrosspan">0 relatorios registrados</span>
+      <span>pagina 1 de 1</span>
+    </div>
+  </div>
+
+  <!-- Subpágina / Seção de Detalhes Completos do Relatório (Oculta por padrão) -->
+  <div class="historico mt-4 d-none" id="secaodetalhesdiv">
+    <div class="historico-cabecalho d-flex justify-content-between align-items-center">
+      <h2 class="historico-titulo">detalhes completos do relatorio</h2>
+      <button class="btn btn-secondary btn-sm" onclick="voltarparaohistoricofunc()">voltar para a lista</button>
+    </div>
+
+    <div class="p-4 bg-white text-dark rounded shadow-sm">
+      <h4 id="detalhediagnosticotitle" class="fw-bold mb-3"></h4>
+      <p><strong>ID do Relatório:</strong> <span id="detalheidevalspan"></span></p>
+      <p><strong>Nome do Usuario:</strong> <span id="detalheusuariovalspan"></span></p>
+      <p><strong>Data de Registro:</strong> <span id="detalhedatavalspan"></span></p>
+      <hr>
+      <p><strong>Descrição Completa:</strong></p>
+      <p id="detalhedescricaovalp" class="p-3 bg-light border rounded"></p>
+
+      <div class="mt-4 d-flex gap-2">
+        <button class="btn btn-danger" id="botaofenviarpdfbtn" onclick="">enviar relatorio por email (pdf)</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  $(document).ready(function () {
+    carregarhistoricocomajaxfunc();
+  });
+
+  // Função para formatar data e hora mantendo a lógica solicitada
+  function formatardatahorafunc(datastr) {
+    if (!datastr) return "";
+    try {
+      if (datastr.includes("/")) return datastr;
+      const partesdt = datastr.split(" ");
+      const data = partesdt[0].split("-");
+      if (data.length === 3) {
+        const ano = data[0];
+        const mes = data[1];
+        const dia = data[2];
+        let horamin = partesdt[1] ? partesdt[1].substring(0, 5) : "";
+        return horamin ? `${dia}/${mes}/${ano} às ${horamin}` : `${dia}/${mes}/${ano}`;
+      }
+      return datastr;
+    } catch (e) {
+      return datastr;
+    }
+  }
+
+  // Função auxiliar para atualizar a contagem dinâmica na tela com jQuery
+  function atualizardadoscontadorfunc() {
+    const qtdint = $(".historico-item:not([style*='display: none'])").length;
+    $("#totalregistrosspan").text(`${qtdint} relatorio${qtdint === 1 ? '' : 's'} registrado${qtdint === 1 ? '' : 's'}`);
+  }
+
+  function carregarhistoricocomajaxfunc() {
+    $.ajax({
+      url: "/api/relatorios/usuario/",
+      type: "GET",
+      contentType: "application/json",
+      success: function (relatorioslistajson) {
+        const listahistoricodiv = $("#listahistoricodiv");
+        listahistoricodiv.empty();
+
+        if (relatorioslistajson.length === 0) {
+          listahistoricodiv.html("<p class='text-center p-3'>Nenhum relatório encontrado.</p>");
+          atualizardadoscontadorfunc();
+          return;
+        }
+
+        relatorioslistajson.forEach(relatorioobj => {
+          const dataformatadastr = formatardatahorafunc(relatorioobj.dtcregistro);
+
+          const itemdiv = `
+            <div class="historico-item" data-idregistro="${relatorioobj.iderelatorio}">
+              <div>
+                <div class="historico-campo-label">documento</div>
+                <div class="historico-campo-valor">${relatorioobj.desnomediagnostico}</div>
+              </div>
+              <div>
+                <div class="historico-campo-label">descrição</div>
+                <div class="historico-campo-valor">${relatorioobj.descrelatorio}</div>
+              </div>
+              <div>
+                <div class="historico-campo-label">data registro</div>
+                <div class="historico-campo-valor">${dataformatadastr}</div>
+              </div>
+              <div class="historico-acoes">
+                <button class="botao-acao botao-ver" onclick="verrelatoriocomajaxfunc(${relatorioobj.iderelatorio})">ver</button>
+                <button class="botao-acao botao-excluir" onclick="excluirrelatoriofunc(${relatorioobj.iderelatorio})">excluir</button>
+              </div>
+            </div>
+          `;
+          listahistoricodiv.append(itemdiv);
+        });
+
+        atualizardadoscontadorfunc();
+      },
+      error: function () {
+        $("#listahistoricodiv").html("<p class='text-center p-3 text-danger'>Erro ao carregar histórico.</p>");
+        $("#totalregistrosspan").text("0 relatorios registrados");
+      }
+    });
+  }
+
+  // Carrega os detalhes completos na subpágina interna usando jQuery
+  function verrelatoriocomajaxfunc(iderelatorioarg) {
+    $.ajax({
+      url: `/api/relatorio/${iderelatorioarg}/`,
+      type: "GET",
+      contentType: "application/json",
+      success: function (dadosobj) {
+        $("#detalhediagnosticotitle").text(dadosobj.desnomediagnostico);
+        $("#detalheidevalspan").text(iderelatorioarg);
+        $("#detalheusuariovalspan").text(dadosobj.desnomeusuario);
+        $("#detalhedatavalspan").text(formatardatahorafunc(dadosobj.dtcregistro));
+        $("#detalhedescricaovalp").text(dadosobj.descrelatorio);
+
+        $("#botaofenviarpdfbtn").attr("onclick", `enviarpdfporemailfunc(${iderelatorioarg})`);
+
+        $("#secaohistoricodiv").addClass("d-none");
+        $("#secaodetalhesdiv").removeClass("d-none");
+      },
+      error: function () {
+        alert("Erro ao carregar os detalhes do relatório.");
+      }
+    });
+  }
+
+  // Função para enviar o PDF por e-mail via AJAX usando jQuery
+  function enviarpdfporemailfunc(iderelatorioarg) {
+    const botaofenviarpdfbtn = $("#botaofenviarpdfbtn");
+    botaofenviarpdfbtn.prop("disabled", true).text("enviando e-mail...");
+
+    $.ajax({
+      url: `/api/relatorio/${iderelatorioarg}/enviaremail/`,
+      type: "POST",
+      contentType: "application/json",
+      success: function () {
+        botaofenviarpdfbtn.prop("disabled", false).text("enviar relatorio por email (pdf)");
+        alert("Relatório enviado com sucesso para o seu e-mail!");
+      },
+      error: function () {
+        botaofenviarpdfbtn.prop("disabled", false).text("enviar relatorio por email (pdf)");
+        alert("Erro ao enviar o relatório por e-mail.");
+      }
+    });
+  }
+
+  function voltarparaohistoricofunc() {
+    $("#secaodetalhesdiv").addClass("d-none");
+    $("#secaohistoricodiv").removeClass("d-none");
+  }
+
+function excluirrelatoriofunc(iderelatorioarg) {
+    if (confirm("Tem certeza de que deseja excluir este relatório?")) {
+      $.ajax({
+        url: `/api/relatorio/${iderelatorioarg}/excluir/`,
+        type: "POST",
+        contentType: "application/json",
+        success: function (responseobj) {
+          // Remove o item dinamicamente da listagem usando o atributo data-idregistro
+          $(`.historico-item[data-idregistro="${iderelatorioarg}"]`).fadeOut(300, function() {
+            $(this).remove();
+            // Atualiza o contador de registros na tela
+            atualizardadoscontadorfunc();
+            
+            // Se o usuário estiver na tela de detalhes e excluir por lá, retorna para a lista
+            if (!$("#secaodetalhesdiv").hasClass("d-none")) {
+              voltarparaohistoricofunc();
+            }
+          });
+
+          alert(responseobj.mensagem || "Relatório excluído com sucesso!");
+        },
+        error: function (xhr) {
+          let erromsg = "Erro ao excluir o relatório.";
+          if (xhr.responseJSON && xhr.responseJSON.erro) {
+            erromsg = xhr.responseJSON.erro;
+          }
+          alert(erromsg);
+        }
+      });
+    }
+  }
+  
+  $("#buscadocumentoinput").on("input", function () {
+    const termostr = $(this).val().toLowerCase();
+
+    $(".historico-item").each(function () {
+      const nomedocumentostr = $(this).find(".historico-campo-valor").first().text().toLowerCase();
+      if (nomedocumentostr.includes(termostr)) {
+        $(this).css("display", "grid");
+      } else {
+        $(this).css("display", "none");
+      }
+    });
+
+    atualizardadoscontadorfunc();
+  });
+</script>
+
+</body>
+</html>
