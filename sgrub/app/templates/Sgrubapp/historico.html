@@ -3,7 +3,7 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>SGRUB - Historico de Relatorios</title>
+<title>SGRUB - Histórico de Relatórios</title>
 <link rel="stylesheet" href="{% static 'css/style.css' %}?v=1.8">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">  
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -22,7 +22,7 @@
       <div class="subtitulo">Sistema de Gestão de Resíduos</div>
     </div>
     <div class="pe-3 text-end">
-      <a href="/app/" class="btn btn-outline-light d-inline-flex align-items-center gap-2" id="botaovoltarbtn">
+      <a href="/app/index.html" class="btn btn-outline-light d-inline-flex align-items-center gap-2" id="botaovoltarbtn">
         <i class="bi bi-arrow-left"></i> voltar
       </a>
     </div>
@@ -31,7 +31,7 @@
   <!-- Seção da Listagem de Histórico -->
   <div class="historico" id="secaohistoricodiv">
     <div class="historico-cabecalho">
-      <h2 class="historico-titulo">historico de relatorios</h2>
+      <h2 class="historico-titulo">Histórico de Relatórios</h2>
       <div class="historico-filtro">
         <input type="text" id="buscadocumentoinput" placeholder="buscar pelo nome do documento">
       </div>
@@ -42,29 +42,29 @@
     </div>
 
     <div class="historico-rodape">
-      <span id="totalregistrosspan">0 relatorios registrados</span>
-      <span>pagina 1 de 1</span>
+      <span id="totalregistrosspan">0 relatórios registrados</span>
+      <span>página 1 de 1</span>
     </div>
   </div>
 
   <!-- Subpágina / Seção de Detalhes Completos do Relatório (Oculta por padrão) -->
   <div class="historico mt-4 d-none" id="secaodetalhesdiv">
     <div class="historico-cabecalho d-flex justify-content-between align-items-center">
-      <h2 class="historico-titulo">detalhes completos do relatorio</h2>
-      <button class="btn btn-secondary btn-sm" onclick="voltarparaohistoricofunc()">voltar para a lista</button>
+      <h2 class="historico-titulo">Detalhes completos do relatório</h2>
+      <button class="btn btn-secondary btn-sm" onclick="voltarparaohistoricofunc()">Voltar para a lista</button>
     </div>
 
     <div class="p-4 bg-white text-dark rounded shadow-sm">
       <h4 id="detalhediagnosticotitle" class="fw-bold mb-3"></h4>
-      <p><strong>ID do Relatório:</strong> <span id="detalheidevalspan"></span></p>
-      <p><strong>Nome do Usuario:</strong> <span id="detalheusuariovalspan"></span></p>
+      <!--<p><strong>ID do Relatório:</strong> <span id="detalheidevalspan"></span></p>-->
+      <p><strong>Nome do Usuário:</strong> <span id="detalheusuariovalspan"></span></p>
       <p><strong>Data de Registro:</strong> <span id="detalhedatavalspan"></span></p>
       <hr>
       <p><strong>Descrição Completa:</strong></p>
       <p id="detalhedescricaovalp" class="p-3 bg-light border rounded"></p>
 
       <div class="mt-4 d-flex gap-2">
-        <button class="btn btn-danger" id="botaofenviarpdfbtn" onclick="">enviar relatorio por email (pdf)</button>
+        <button class="btn btn-danger" id="botaofenviarpdfbtn" onclick="">Enviar relatório por e-mail (PDF)</button>
       </div>
     </div>
   </div>
@@ -99,7 +99,7 @@
   // Função auxiliar para atualizar a contagem dinâmica na tela com jQuery
   function atualizardadoscontadorfunc() {
     const qtdint = $(".historico-item:not([style*='display: none'])").length;
-    $("#totalregistrosspan").text(`${qtdint} relatorio${qtdint === 1 ? '' : 's'} registrado${qtdint === 1 ? '' : 's'}`);
+    $("#totalregistrosspan").text(`${qtdint} relatório${qtdint === 1 ? '' : 's'} registrado${qtdint === 1 ? '' : 's'}`);
   }
 
   function carregarhistoricocomajaxfunc() {
@@ -147,7 +147,7 @@
       },
       error: function () {
         $("#listahistoricodiv").html("<p class='text-center p-3 text-danger'>Erro ao carregar histórico.</p>");
-        $("#totalregistrosspan").text("0 relatorios registrados");
+        $("#totalregistrosspan").text("0 relatórios registrados");
       }
     });
   }
@@ -186,11 +186,11 @@
       type: "POST",
       contentType: "application/json",
       success: function () {
-        botaofenviarpdfbtn.prop("disabled", false).text("enviar relatorio por email (pdf)");
+        botaofenviarpdfbtn.prop("disabled", false).text("Enviar relatório por e-mail (PDF)");
         alert("Relatório enviado com sucesso para o seu e-mail!");
       },
       error: function () {
-        botaofenviarpdfbtn.prop("disabled", false).text("enviar relatorio por email (pdf)");
+        botaofenviarpdfbtn.prop("disabled", false).text("Enviar relatório por e-mail (PDF)");
         alert("Erro ao enviar o relatório por e-mail.");
       }
     });

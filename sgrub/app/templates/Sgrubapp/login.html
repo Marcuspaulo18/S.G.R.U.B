@@ -20,11 +20,6 @@
       <h1 class="m-0">SGRUB</h1>
       <div class="subtitulo">Sistema de Gestão de Resíduos</div>
     </div>
-    <div class="pe-3 text-end">
-      <a href="/app/" class="btn btn-outline-light d-inline-flex align-items-center gap-2" id="botaovoltarbtn">
-        <i class="bi bi-arrow-left"></i> voltar
-      </a>
-    </div>
   </div>
     <!-- ===================== TELA 1: LOGIN ===================== -->
     <div id="screen-login" class="screen active">
@@ -56,9 +51,9 @@
             <a href="/app/cadastro.html" class="login-link">Criar conta</a>
           </div>
 
-          <button class="btn-voltar-login" type="button" id="btn-voltar">
+          <!-- <button class="btn-voltar-login" type="button" id="btn-voltar">
             Voltar
-          </button>
+          </button> -->
         </div>
       </div>
 
@@ -83,7 +78,7 @@
         processData: false,
         contentType: false,
         success: function (response) {
-           window.location.href = '/app/';
+           window.location.href = '/app/index.html';
            console.log(1)
         },
         error: function (xhr) {
@@ -94,9 +89,6 @@
      
     });
 
-    $('#btn-voltar').on('click', function () {
-      window.location.href = '/app/';
-    });
   </script>
 
 </body>

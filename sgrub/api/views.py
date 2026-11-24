@@ -1,4 +1,4 @@
-from rest_framework.views import APIView
+﻿from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from reportlab.lib.pagesizes import letter
@@ -75,12 +75,12 @@ class validalogin(APIView):
 
        if row:
            usuario={
-               'desnomeusuario':row[0],
-               'dessenha':row[1],
-               'ideusuario':row[2],
-               'destelefone':row[3],
-               'desprofissao':row[4],
-               'nrocpf':row[5]
+               'desnomeusuario': row[0] if len(row) > 0 else None,
+               'dessenha': row[1] if len(row) > 1 else None,
+               'ideusuario': row[2] if len(row) > 2 else None,
+               'destelefone': row[3] if len(row) > 3 else None,
+               'desprofissao': row[4] if len(row) > 4 else None,
+               'nrocpf': row[5] if len(row) > 5 else None,
            }
            request.session['desnomeusuario'] = row[0]
            request.session['ideusuario'] = row[2]
@@ -119,17 +119,17 @@ class cadastrousuario(APIView):
                 tipo_pessoa
             ])
             
-            # Obtém o ideusuario gerado/retornado pela procedure
+            # ObtÃ©m o ideusuario gerado/retornado pela procedure
             row = cursor.fetchone()
             if not row:
                 cursor.close()
                 banco.close()
-                return Response({'erro': 'Falha ao registrar usuário base.'}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({'erro': 'Falha ao registrar usuÃ¡rio base.'}, status=status.HTTP_400_BAD_REQUEST)
             
             ideusuario = row[0]
 
             # ----------------------------------------------------
-            # 3. Executa a Procedure Específica (PF ou PJ)
+            # 3. Executa a Procedure EspecÃ­fica (PF ou PJ)
             # ----------------------------------------------------
             if tipo_pessoa == 'PF':
                 cpf = request.data.get('cpf')
@@ -148,8 +148,6 @@ class cadastrousuario(APIView):
                 porte = request.data.get('porte')
                 nome_fantasia = request.data.get('nome_fantasia')
                 data_fundacao = request.data.get('data_fundacao')
-                insc_municipal = 1
-                insc_estadual = 1
                 segmento = request.data.get('segmento')
                 link_portal = request.data.get('link_empresa')
                 cnpj = request.data.get('cnpj')
@@ -160,15 +158,13 @@ class cadastrousuario(APIView):
                     porte,
                     nome_fantasia,
                     data_fundacao,
-                    insc_municipal,
-                    insc_estadual,
                     segmento,
                     link_portal,
                     cnpj
                 ])
 
             # ----------------------------------------------------
-            # 4. Executa a Procedure de Endereço (spinsupendereco)
+            # 4. Executa a Procedure de EndereÃ§o (spinsupendereco)
             # ----------------------------------------------------
             logradouro = request.data.get('logradouro')
             cep = request.data.get('cep')
@@ -189,12 +185,12 @@ class cadastrousuario(APIView):
                 cidade
             ])
 
-            # Finalização das transações
+            # FinalizaÃ§Ã£o das transaÃ§Ãµes
             banco.commit()
             cursor.close()
             banco.close()
 
-            # Cria a sessão
+            # Cria a sessÃ£o
             request.session['desnomeusuario'] = usuario
             request.session['ideusuario'] = ideusuario
 
@@ -259,8 +255,8 @@ class salvarrelatorio(APIView):
                     resend.Emails.send({
                        "from": "onboarding@resend.dev",
                         "to": desemail,
-                        "subject": f"Relatório Salvo: {desnomediagnostico}",
-                        "html": f"<p>Olá,</p><p>Seu relatório <strong>{desnomediagnostico}</strong> foi salvo com sucesso!</p><p><strong>Resumo:</strong> {descrelatorio}</p>"
+                        "subject": f"RelatÃ³rio Salvo: {desnomediagnostico}",
+                        "html": f"<p>OlÃ¡,</p><p>Seu relatÃ³rio <strong>{desnomediagnostico}</strong> foi salvo com sucesso!</p><p><strong>Resumo:</strong> {descrelatorio}</p>"
                     })
                 except Exception as erro_email:
                     print(f"Falha ao enviar e-mail: {erro_email}")
@@ -370,17 +366,17 @@ class enviarpdfporemail(APIView):
             dtcregistrostr = str(rowbanco[3]) if rowbanco[3] else ''
 
             # ----------------------------------------------------
-            # Geração do PDF em Memória (Buffer)
+            # GeraÃ§Ã£o do PDF em MemÃ³ria (Buffer)
             # ----------------------------------------------------
             bufferpdf = io.BytesIO()
             pdivcanvas = canvas.Canvas(bufferpdf, pagesize=letter)
             
-            # Cabeçalho no PDF
+            # CabeÃ§alho no PDF
             pdivcanvas.setFont("Helvetica-Bold", 16)
             pdivcanvas.drawString(50, 750, "SGRUB - Sistema de Gestao de Residuos")
             pdivcanvas.line(50, 740, 560, 740)
 
-            # Conteúdo do Relatório
+            # ConteÃºdo do RelatÃ³rio
             pdivcanvas.setFont("Helvetica-Bold", 12)
             pdivcanvas.drawString(50, 700, f"Relatorio ID: {iderelatorio}")
             pdivcanvas.drawString(50, 680, f"Diagnostico: {desnomediagnosticostr}")
@@ -406,8 +402,8 @@ class enviarpdfporemail(APIView):
             resend.Emails.send({
                 "from": "onboarding@resend.dev",
                 "to": desemailvar,
-                "subject": f"Relatório PDF - {desnomediagnosticostr}",
-                "html": "<p>Olá,</p><p>Segue em anexo o relatório completo em formato PDF gerado pelo sistema SGRUB.</p>",
+                "subject": f"RelatÃ³rio PDF - {desnomediagnosticostr}",
+                "html": "<p>OlÃ¡,</p><p>Segue em anexo o relatÃ³rio completo em formato PDF gerado pelo sistema SGRUB.</p>",
                 "attachments": [
                     {
                         "filename": f"relatorio_{iderelatorio}.pdf",
@@ -425,7 +421,7 @@ class enviarpdfporemail(APIView):
 class deletarrelatorio(APIView):
     def post(self, request, iderelatorio):
         try:
-            # Recupera o ID do usuário logado na sessão do Django
+            # Recupera o ID do usuÃ¡rio logado na sessÃ£o do Django
             ideusuariologado = request.session.get('ideusuario')
             if not ideusuariologado:
                 return Response({'erro': 'Sessao expirada ou usuario nao autenticado.'}, status=status.HTTP_401_UNAUTHORIZED)
@@ -433,20 +429,20 @@ class deletarrelatorio(APIView):
             banco = conn().banco
             cursor = banco.cursor()
 
-            # Executa a Stored Procedure de exclusão lógica que você criou
+            # Executa a Stored Procedure de exclusÃ£o lÃ³gica que vocÃª criou
             cursor.callproc('spupddeletarrelatorio', [
                 iderelatorio,
                 ideusuariologado
             ])
 
-            # Finaliza a transação e fecha a conexão
+            # Finaliza a transaÃ§Ã£o e fecha a conexÃ£o
             banco.commit()
             cursor.close()
             banco.close()
 
             return Response({
                 'sucesso': True,
-                'mensagem': 'Relatório excluído com sucesso.'
+                'mensagem': 'RelatÃ³rio excluÃ­do com sucesso.'
             }, status=status.HTTP_200_OK)
 
         except Exception as e:
@@ -455,3 +451,4 @@ class deletarrelatorio(APIView):
                 cursor.close()
                 banco.close()
             return Response({'erro': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+

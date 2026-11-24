@@ -21,7 +21,7 @@
       <div class="subtitulo">Sistema de Gestão de Resíduos</div>
     </div>
     <div class="pe-3 text-end">
-      <a href="/app/" class="btn btn-outline-light d-inline-flex align-items-center gap-2" id="botaovoltarbtn">
+      <a href="/app/index.html" class="btn btn-outline-light d-inline-flex align-items-center gap-2" id="botaovoltarbtn">
         <i class="bi bi-arrow-left"></i> voltar
       </a>
     </div>
@@ -35,7 +35,6 @@
     <div class="screen active" id="screen-analise">
       <div class="controls-row">
         <button class="action btn-verde" id="btnSelecionar">Selecione a Imagem</button>
-        <button class="action btn-vermelho" btnfecha>Retorno</button>
       </div>
 
       <div class="preview-wrapper">
@@ -87,7 +86,6 @@
 
       <div class="relatorio-acoes">
         <button class="action btn-azul" id="btnSalvarRelatorio">Salvar no Relatório</button>
-        <button class="action btn-vermelho" btnfecha>Retorno</button>
       </div>
 
       <div class="graph-frame">
@@ -191,13 +189,15 @@
       }
 
       const top3 = dados.top3 || [];
-      const linhasbarra = $('.screen.active .graph-frame .bar-row');
-      top3.forEach(function (item, i) {
-        if (i < linhasbarra.length) {
-          $(linhasbarra[i]).find('.bar-label').text(item.classe);
-          $(linhasbarra[i]).find('.bar-fill').css('width', item.probabilidade + '%');
-          $(linhasbarra[i]).find('.bar-valor').text(item.probabilidade + '%');
-        }
+      $('.screen').each(function () {
+        const linhasbarra = $(this).find('.graph-frame .bar-row');
+        top3.forEach(function (item, i) {
+          if (i < linhasbarra.length) {
+            $(linhasbarra[i]).find('.bar-label').text(item.classe);
+            $(linhasbarra[i]).find('.bar-fill').css('width', item.probabilidade + '%');
+            $(linhasbarra[i]).find('.bar-valor').text(item.probabilidade + '%');
+          }
+        });
       });
     }
 
